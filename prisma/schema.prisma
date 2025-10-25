@@ -42,7 +42,7 @@ model SubDetail {
   subjectName  SubjectName
   semesterName String
   note         String
-  year         Int
+  year         Year[]
   qn           String
   subject Subject @relation(fields: [subjectName, semesterName, courseId], references: [name, semesterName, courseId])
   @@id([courseId, semesterName, subjectName, year, qn])
