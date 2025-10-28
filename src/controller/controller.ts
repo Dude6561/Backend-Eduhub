@@ -4,12 +4,12 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const getSubject = async (req: Request, res: Response) => {
-  const { semesterName, subjectName, courseId } = req.body;
+  const { semesterName, subjectName, courseId } = req.query;
   const response = await prisma.subDetail.findMany({
     where: {
-      semesterName,
-      courseId,
-      subjectName,
+      semesterName: String(semesterName),
+      courseId: Number(courseId),
+      subjectName: String(subjectName),
     },
   });
 
