@@ -24,6 +24,7 @@ model Semester {
 
 model SubDetail {
   qn           String
+  qn2          String?
   note         String
   year         Int
   subjectName  String
