@@ -34,7 +34,7 @@ export const getSubjectName = async (req: Request, res: Response) => {
   }
 
   try {
-    const response = await prisma.subDetail.findMany({
+    const response = await prisma.subject.findMany({
       where: {
         courseId: Number(courseId),
         semesterName: String(semesterName),

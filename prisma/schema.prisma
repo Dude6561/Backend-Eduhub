@@ -14,34 +14,41 @@ model Course {
 }
 
 model Semester {
-  name     String
-  courseId Int
-  Course   Course    @relation(fields: [courseId], references: [id])
-  Subject  Subject[]
-
-  @@id([name, courseId])
+  id        Int       @id @default(autoincrement())
+  name      String
+  courseId  Int
+  Course    Course    @relation(fields: [courseId], references: [id])
+  Subject   Subject[]
 }
-
-model SubDetail {
-  qn           String
-  qn2          String?
-  note         String
-  year         Int
-  subjectName  String
-  semesterName String
-  courseId     Int
-  Subject      Subject @relation(fields: [subjectName, semesterName, courseId], references: [name, semesterName, courseId])
-
-  @@id([courseId, semesterName, subjectName, year, qn])
-}
-// schema bug 
 
 model Subject {
-  name         String
-  semesterName String
-  courseId     Int
-  SubDetail    SubDetail[]
-  Semester     Semester    @relation(fields: [semesterName, courseId], references: [name, courseId])
+  id         Int       @id @default(autoincrement())
+  name       String
+  semesterId Int
+  Semester   Semester  @relation(fields: [semesterId], references: [id])
+  Year       Year[]
+  Notes      Note[]
+}
 
-  @@id([name, semesterName, courseId])
+model Year {
+  id        Int       @id @default(autoincrement())
+  year      Int
+  subjectId Int
+  Subject   Subject   @relation(fields: [subjectId], references: [id])
+  Question  Question[]
+}
+
+model Question {
+  id      Int     @id @default(autoincrement())
+  url1    String
+  url2    String?
+  yearId  Int
+  Year    Year    @relation(fields: [yearId], references: [id])
+}
+
+model Note {
+  id        Int      @id @default(autoincrement())
+  content   String
+  subjectId Int
+  Subject   Subject   @relation(fields: [subjectId], references: [id])
 }
