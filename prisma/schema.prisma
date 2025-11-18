@@ -31,7 +31,7 @@ model Subject {
 }
 
 model Year {
-  id        Int       @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   year      Int
   subjectId Int
   Subject   Subject   @relation(fields: [subjectId], references: [id])
