@@ -1,10 +1,11 @@
 import joi from "joi";
 import { Response, Request, NextFunction } from "express";
+import { login } from "../controller/login";
 
 const signupValidation = (req: Request, res: Response, next: NextFunction) => {
   const schema = joi.object({
     name: joi.string().min(3).max(50).required(),
-    emial: joi.string().email().required(),
+    email: joi.string().email().required(),
     passwrod: joi.string().min(4).max(20).required(),
   });
   const { error } = schema.validate(req.body);
@@ -25,3 +26,5 @@ const loginValidation = (req: Request, res: Response, next: NextFunction) => {
   }
   next();
 };
+
+export { signupValidation, loginValidation };

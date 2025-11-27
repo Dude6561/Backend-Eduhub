@@ -52,3 +52,11 @@ model Note {
   subjectId Int
   Subject   Subject   @relation(fields: [subjectId], references: [id])
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  password String
+  createdTime DateTime @default(now())
+}
