@@ -6,7 +6,7 @@ const signupValidation = (req: Request, res: Response, next: NextFunction) => {
   const schema = joi.object({
     name: joi.string().min(3).max(50).required(),
     email: joi.string().email().required(),
-    passwrod: joi.string().min(4).max(20).required(),
+    password: joi.string().min(4).max(20).required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {
@@ -24,6 +24,7 @@ const loginValidation = (req: Request, res: Response, next: NextFunction) => {
   if (error) {
     return res.status(200).json({ message: "Bad request", error });
   }
+
   next();
 };
 
