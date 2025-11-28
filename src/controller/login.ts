@@ -1,10 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { time } from "node:console";
+import dotenv from "dotenv";
+dotenv.config();
+
 const prisma = new PrismaClient();
+import jwt from "jsonwebtoken";
 
 export const login = async (req: Request, res: Response) => {
+  const SECRET_KEY = process.env.JWT_SECRET;
+  let jwtToken;
+
   try {
     const { email, password } = req.body;
     const currentDate: Date = new Date();
@@ -18,11 +24,18 @@ export const login = async (req: Request, res: Response) => {
     }
     const checkPass = await bcrypt.compare(password, user?.password);
     if (checkPass) {
+      if (SECRET_KEY) {
+        jwtToken = jwt.sign({ email: user.email, id: user.id }, SECRET_KEY, {
+          expiresIn: "1d",
+        });
+      }
       console.log(
         `${user.name} Logged in Successfully ${currentDate.toString()}`
       );
 
-      return res.status(200).json({ message: " User Found", success: true });
+      return res
+        .status(200)
+        .json({ message: " User Found", success: true, jwtToken });
     } else {
       return res
         .status(404)
