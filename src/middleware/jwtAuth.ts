@@ -8,17 +8,20 @@ const jwtAuth = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers["authorization"];
   if (!SECRET_KEY) {
     return res
-      .status(500)
+      .status(404)
       .json({ message: "Server error: Missing secret key" });
   }
   if (!authHeader) {
-    return res.status(401).json({ message: "Authorization token missing" });
+    return res.status(404).json({ message: "Authorization token missing" });
   }
 
   try {
     const decodedAuth = authHeader.split(" ")[1];
     const decode = jwt.verify(decodedAuth, SECRET_KEY);
+
     console.log("Token Verified");
+    return res.status(500).json({ message: "token verification succes" });
+
     next();
   } catch (err) {
     console.log("Token verification failed");

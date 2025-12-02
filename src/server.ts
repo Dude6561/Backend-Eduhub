@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import subjectRoute from "./routes/route";
 import loginRoute from "./routes/loginRoute";
-import { Response, Request } from "express";
 
 const app = express();
 const port = 3031;
