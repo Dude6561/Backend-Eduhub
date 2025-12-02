@@ -6,13 +6,24 @@ dotenv.config();
 const jwtAuth = (req: Request, res: Response, next: NextFunction) => {
   const SECRET_KEY = process.env.JWT_SECRET;
   const authHeader = req.headers["authorization"];
-  if (authHeader && SECRET_KEY) {
-    try {
-      const decode = jwt.verify(authHeader, SECRET_KEY);
-      console.log("Token is verify");
-      next();
-    } catch (err) {
-      console.log("TOken is invalid");
-    }
+  if (!SECRET_KEY) {
+    return res
+      .status(500)
+      .json({ message: "Server error: Missing secret key" });
+  }
+  if (!authHeader) {
+    return res.status(401).json({ message: "Authorization token missing" });
+  }
+
+  try {
+    const decodedAuth = authHeader.split(" ")[1];
+    const decode = jwt.verify(decodedAuth, SECRET_KEY);
+    console.log("Token Verified");
+    next();
+  } catch (err) {
+    console.log("Token verification failed");
+    return res.status(404).json({ message: "token verification failed" });
   }
 };
+
+export { jwtAuth };
