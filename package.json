@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "main": "server.ts",
   "scripts": {
-    "build": "prisma generate && tsc",
+    "clean": "rmdir /s /q node_modules\\.prisma 2>nul || exit 0",
+    "prisma:generate": "prisma generate",
+    "build": "npm run clean && npm run prisma:generate && tsc",
     "start": "node dist/server.js",
-    "dev": "nodemon --watch src/**/*.ts --exec ts-node src/server.ts",
+    "dev": "nodemon --watch src --exec ts-node src/server.ts",
     "lint": "eslint src/**/*.ts"
   },
   "keywords": [],
