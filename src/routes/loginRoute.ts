@@ -9,6 +9,6 @@ import { jwtAuth } from "../middleware/jwtAuth";
 const router = Router();
 router.post("/login", loginValidation, login);
 router.post("/signup", signupValidation, signup);
-router.post("/dashboard", jwtAuth, dashboard);
+router.get("/dashboard", jwtAuth, dashboard);
 
 export default router;

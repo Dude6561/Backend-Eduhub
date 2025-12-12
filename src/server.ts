@@ -4,7 +4,7 @@ import subjectRoute from "./routes/route";
 import loginRoute from "./routes/loginRoute";
 
 const app = express();
-const port = 3032;
+const port = 3033;
 app.use(cors());
 app.use(express.json());
 
