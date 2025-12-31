@@ -32,7 +32,7 @@ export const getQn = async (req: Request, res: Response) => {
     return res.status(200).json(response[0].Subject);
   } catch (error: any) {
     console.error(error);
-    return res.status(500).json({ error: "server error getting qn" });
+    return res.status(500).json({ error: "server  error while getting qn" });
   }
 };
 
