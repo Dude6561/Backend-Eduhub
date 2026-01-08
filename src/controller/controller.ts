@@ -62,3 +62,12 @@ export const getSubjectName = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "Server error getting subject name" });
   }
 };
+
+export const getCourseName = async (req: Request, res: Response) => {
+  try {
+    const response = await prisma.course.findMany();
+    return res.status(200).json(response);
+  } catch (error: any) {
+    return res.status(500).json({ error: "Server error getting Course" });
+  }
+};
