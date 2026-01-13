@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import joi from "joi";
+import { Course } from "../controller/dashboard";
 const checkCourse = (req: Request, res: Response, next: NextFunction) => {
   const schema = joi.object({
     courseName: joi.string().min(3).max(10).required(),
@@ -11,3 +12,28 @@ const checkCourse = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 export { checkCourse };
+
+// for checking in details input
+const checkDetail =(req:Request, res:Response, next:NextFunction)=>{
+  const {subject, year, course, semester} = req.body;
+  const subjectNames = subject.split(",").map((data:any) => data.trim());
+  let years;
+  if( year == "2075-2080"){
+     years = [2075,2076,2078,2079,2080];
+  }
+  const data ={subjectNames: subjectNames, years: years, courseName:course, semester:semester}
+  const schema = joi.object({
+   courseName: joi.number().required(),
+   subjectNames:joi.array().items(joi.string()).required(),
+   semester: joi.string().required(),
+   years: joi.array().items(joi.number()).required()
+  })
+  const { error } = schema.validate(data);
+  if(error){
+    console.log(error);
+    
+    return res.status(200).json(error);
+  }
+  next();
+}
+export {checkDetail};
