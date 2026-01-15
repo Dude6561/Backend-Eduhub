@@ -1,8 +1,8 @@
-import express from "express";
 import cors from "cors";
-import subjectRoute from "./routes/route";
-import loginRoute from "./routes/loginRoute";
+import express from "express";
 import dashRoute from "./routes/dashRoute";
+import loginRoute from "./routes/loginRoute";
+import subjectRoute from "./routes/route";
 
 const app = express();
 const port = 3033;

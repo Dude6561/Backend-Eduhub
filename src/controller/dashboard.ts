@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import { Request, Response } from "express";
 const prisma = new PrismaClient();
 
 const dashboard = (req: Request, res: Response) => {
@@ -15,7 +15,7 @@ export const Course = async (req: Request, res: Response) => {
     },
   });
 };
-
+//detail dashboard api
 export const Detail = async(req:Request, res:Response) =>{
   try{
   const {subject, year, course, semester} = req.body;
@@ -29,4 +29,12 @@ export const Detail = async(req:Request, res:Response) =>{
   } catch (error){
 return res.status(500).json({Message : " Server Error"});
   }
+}
+
+// for inputiing files in the server storage
+export const Input = async(req:Request, res:Response) =>{
+  try{
+  const { subject, year, course, semester} = req.body;
+
+  } catch{}
 }

@@ -38,13 +38,11 @@ const checkDetail =(req:Request, res:Response, next:NextFunction)=>{
 export { checkDetail };
 
 export const checkInput = async(req:Request, res:Response, next:NextFunction) =>{
-  const { subject, year, course, semester} = req.body;
   const schema = joi.object({
     subject : joi.string().required(),
     semester : joi.string().required(),
     course : joi.string().required(),
     year : joi.number().required(),
-
   });
    const { error } = schema.validate(req.body);
    if( error ) {
