@@ -1,8 +1,9 @@
+import dotenv from "dotenv";
+dotenv.config();
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 import { supabase } from "./supabase";
-const prisma = new PrismaClient();
-
+import prisma from "../prisma";
 const dashboard = (req: Request, res: Response) => {
   return res.status(200).json({ message: "ok" });
 };

@@ -1,14 +1,14 @@
-import { PrismaClient } from "@prisma/client";
-import { Request, Response } from "express";
-import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 dotenv.config();
-
-const prisma = new PrismaClient();
+import prisma from "../prisma";
+import { Request, Response } from "express";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const login = async (req: Request, res: Response) => {
   const SECRET_KEY = process.env.JWT_SECRET;
+  console.log(SECRET_KEY);
+
   let jwtToken;
 
   try {
@@ -30,7 +30,8 @@ export const login = async (req: Request, res: Response) => {
         });
       }
       console.log(
-        `${user.name} Logged in Successfully ${currentDate.toString()}`
+        `${user.name} Logged in Successfully ${currentDate.toString()}`,
+        jwtToken,
       );
 
       return res
@@ -42,7 +43,7 @@ export const login = async (req: Request, res: Response) => {
         .json({ message: "Password incorrect", success: false });
     }
   } catch (err) {
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ message: err });
   }
 };
 
