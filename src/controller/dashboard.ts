@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
-import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
 import { supabase } from "./supabase";
 import prisma from "../prisma";
+import { log } from "node:console";
 const dashboard = (req: Request, res: Response) => {
   return res.status(200).json({ message: "ok" });
 };
@@ -47,7 +47,6 @@ export const Input = async (req: Request, res: Response) => {
     }
     const image1 = req.files.image1?.[0];
     const image2 = req.files.image2?.[0] ?? null;
-
     // const {data, error } = await supabase.storage.createBucket('')// to make bucket confusion if course comes or id
     const { data: data1, error: error1 } = await supabase.storage
       .from(`${course}`)
@@ -62,6 +61,7 @@ export const Input = async (req: Request, res: Response) => {
         .upload(`${semester}/${year}/${image2.originalname}`, image2.buffer);
       if (error2) throw error2;
     }
+    return res.status(200).json({ message: "Received" });
   } catch {
     return res.status(400).json({ message: "Error Uploading File" });
   }
